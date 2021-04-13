@@ -1,0 +1,36 @@
+version : "3.9"
+services:
+        confluent-community:
+                build: ./
+                environment:
+                        - KAFKA_CONFIG=$CONFLUENT_HOME/config/server.properties
+                        - ZOOKEEPER_CONFIG=$CONFLUENT_HOME/config/zookeeper.properties
+                        - SCHEMA_REGISTRY_CONFIG=$CONFLUENT_HOME/config/schema-registry.properties
+                        - CONNECT_CONFIG=$CONFLUENT_HOME/config/connect-avro-standalone.properties
+                        - CONNECT_REST_PORT=8083
+                        - CONNECT_OFFSETS=$CONFLUENT_HOME/data/connect/connect.offsets
+                        - CONNECT_KEY_CONVERTER=io.confluent.connect.avro.AvroConverter
+                        - SCHEMA_REGISTRY_URL=http://0.0.0.0:8081
+                        - CONNECT_VALUE_CONVERTER=io.confluent.connect.avro.AvroConverter
+                        - SCHEMA_REGISTRY_LISTENER=http://0.0.0.0:8081
+                        - KAFKASTORE_TOPIC=_schemas
+                        - SCHEMA_REGISTRY_GROUP_ID=SCHEMA_REGISTRY_A
+                        - SCHEMA_REGISTRY_LEADER_ELIGIBILITY=true
+                        - PROTOCOL_BOOTSTRAP_SERVERS=PLAINTEXT://localhost:9092
+                        - ZOOKEEPER_DATA_DIR=$CONFLUENT_HOME/data/zookeeper
+                        - ZOOKEEPER_CLIENT_PORT=2181
+                        - BOOTSTRAP_SERVERS=localhost:9092
+                        - KAFKA_SERVER_BROKER_ID=0
+                        - ZOOKEEPER_CONNECT_IP_PORT=localhost:2181
+                        - KAFKA_SERVER_LOG_DIR=$CONFLUENT_HOME/data/kafka-logs
+                ports:
+                        - "9092:9092"
+                        - "8081:8081"
+                        - "8083:8083"
+                        #network_mode: "host"
+                        
+                volumes:
+                        - ./docker-logs:/opt/confluent/logs
+                        - ./docker-data:/opt/confluent/data
+                image: confluent-community:latest
+                container_name: confluent-community
