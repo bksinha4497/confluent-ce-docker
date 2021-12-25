@@ -48,7 +48,7 @@ RUN dnf install wget zip moreutils gettext unzip java-1.8.0-openjdk.x86_64 -y &&
 # install conflunet
 
 WORKDIR $CONFLUENT_HOME
-RUN wget https://packages.confluent.io/archive/6.1/confluent-community-6.1.1.tar.gz -P . && tar -xvzf confluent-community-6.1.1.tar.gz && mv confluent-6.1.1/* . && rm -rf confluent-6.1.1 confluent-community-6.1.1.tar.gz
+RUN wget http://packages.confluent.io/archive/7.0/confluent-community-7.0.1.tar.gz -P . && tar -xvzf confluent-community-7.0.1.tar.gz && mv confluent-7.0.1/* . && rm -rf confluent-7.0.1 confluent-community-7.0.1.tar.gz
 
 # install confluent hub
 
